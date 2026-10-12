@@ -4,7 +4,7 @@ const output='test-results/tornado-combo';await mkdir(output,{recursive:true});
 const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome-stable',headless:true,args:['--no-sandbox']});
 try {
  const page=await browser.newPage({viewport:{width:1440,height:1050}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#game[data-ready="true"]').waitFor();
+ await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
  await page.locator('#pause').click();await page.locator('#states').click();
  for(const [id,keys,damage,player] of [['tornado_mk',['b'],80,0],['forward_spin_hk',['h'],100,0],['tornado_spin_combo',['b','h'],180,0],['tornado_spin_combo',['Numpad2','Numpad6'],180,1]]) {
   await page.locator('#reset').click();await page.keyboard.down('d');
@@ -16,7 +16,7 @@ try {
   await page.locator('#step').evaluate(b=>{for(let i=0;i<140;i++)b.click();});
   await expect(page.locator(`#hp-${1-player}`)).toHaveText(`${1000-damage} / 1000`);
   await page.locator('#record').click();await page.locator('#play').click();
-  await expect(page.locator('#notice')).toContainText('Replay ended');
+  await expect(page.locator('#notice')).toContainText('回放结束');
   await expect(page.locator(`#hp-${1-player}`)).toHaveText(`${1000-damage} / 1000`);await page.locator('#play').click();
  }
  // Reproduce hardware keydowns arriving on different simulation frames.

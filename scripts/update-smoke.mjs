@@ -9,7 +9,7 @@ const output='test-results/update-01';await mkdir(output,{recursive:true});
 try {
   const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(url);await page.locator('canvas[data-ready="true"]').waitFor();
+  await page.goto(url);await page.locator('#enter-local').click();await page.locator('canvas[data-ready="true"]').waitFor();
   await page.locator('#pause').click();
   await expect(page.getByRole('progressbar')).toHaveCount(6);
   for(const theme of ['light','dark']) {
@@ -33,7 +33,7 @@ try {
         replay.frames.push({inputs:[n,n],events:[]});return replay;
       },fill);
       await page.locator('#replay-file').setInputFiles({name:'resources.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(replay))});
-      await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('Replay ended');
+      await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('回放结束');
       for(const owner of [0,1])for(const resource of ['revenge','special']) {
         const track=page.locator(`#resource-${owner}-${resource}`);
         await expect(track).toHaveAttribute('aria-valuenow',String(fill));
@@ -48,7 +48,7 @@ try {
     }
     expect(await page.locator('#game').getAttribute('data-frame')).toBe(frame);
   }
-  await page.reload();await page.locator('canvas[data-ready="true"]').waitFor();
+  await page.reload();await page.locator('#enter-local').click();await page.locator('canvas[data-ready="true"]').waitFor();
   await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
   await page.locator('#pause').click();
   await page.locator('#theme').focus();await page.keyboard.press('Space');
@@ -109,7 +109,7 @@ try {
   await page.locator('#pose-boxes').screenshot({path:`${output}/${name}-block-boxes.png`});
   const blocked=await browser.newPage();
   await blocked.addInitScript(()=>{Object.defineProperty(window,'localStorage',{get(){throw Error('storage disabled');}});});
-  await blocked.goto(url);await blocked.locator('canvas[data-ready="true"]').waitFor();
+  await blocked.goto(url);await blocked.locator('#enter-local').click();await blocked.locator('canvas[data-ready="true"]').waitFor();
   await blocked.locator('#theme').click();await expect(blocked.locator('html')).toHaveAttribute('data-theme','dark');
   expect(errors).toEqual([]);
   console.log(`${name}: theme persistence/keyboard/storage fallback, Canvas colors, six meters at 0/25/100%, mirrored fill, replay return, narrow layout and all attack contact sheets passed.`);

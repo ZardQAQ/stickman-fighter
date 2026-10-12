@@ -1,5 +1,6 @@
 export type Theme = 'light' | 'dark';
 import { onLanguageChange, t } from './i18n';
+import { icon } from './icons';
 export const PALETTE_KEYS = ['arena','text','muted','ground','p1','p2','revenge','special','hurt','push','hit','rigLight','rigOutline','eye','eyeGlow',
   'stageShadow','stageLight',
   'dojoCeiling','dojoPaper','dojoWood','dojoTrim','dojoFloor','dojoFloorAlt','dojoAccent','dojoLamp','dojoHaze',
@@ -30,11 +31,12 @@ export function readPalette(): Palette {
   return {...Object.fromEntries(PALETTE_KEYS.map(key=>[key,style.getPropertyValue(`--${key}`).trim()])),boxAlpha:Number(style.getPropertyValue('--box-alpha'))} as Palette;
 }
 export function setupTheme(button: HTMLButtonElement, onChange: (palette: Palette)=>void): void {
-  let theme:Theme='dark';
-  try { if(localStorage.getItem('stickman.theme')==='light')theme='light'; } catch { /* Session-only theme when storage is denied. */ }
+  let stored: string | null = null;
+  try { stored=localStorage.getItem('stickman.theme'); } catch { /* Session-only theme when storage is denied. */ }
+  let theme:Theme=stored==='dark' || (stored!=='light' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)?'dark':'light';
   function apply(): void {
     document.documentElement.dataset.theme=theme;
-    button.textContent=theme==='dark'?'☀':'☾';
+    button.innerHTML=icon(theme==='dark'?'sun':'moon');
     button.setAttribute('aria-pressed',String(theme==='dark'));
     button.setAttribute('aria-label',t(theme==='dark'?'theme.light':'theme.dark'));
     button.title=t(theme==='dark'?'theme.lightTitle':'theme.darkTitle');

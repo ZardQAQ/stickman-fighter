@@ -1,5 +1,7 @@
 # Stickman Fighter
 
+**Originalautor:** [Youssef Serestou](https://github.com/sinusphi) — [sinusphi/stickman-fighter](https://github.com/sinusphi/stickman-fighter). Dieses Repository ist eine veränderte Kopie. Das Urheberrecht verbleibt beim Originalautor; siehe [LICENSE](LICENSE).
+
 ![Gameplay-Demo](https://github.com/sinusphi/stickman-fighter/blob/main/pics/demo.gif)
 
 [![Version](https://img.shields.io/badge/version-1.4.0-2563eb)](package.json)
@@ -78,8 +80,9 @@ Richtungen gelten relativ zum Gegner: **6** vorwärts, **4** zurück, **2** hock
 
 ## Lizenz
 
-Dieses Projekt ist lizensiert unter der **MIT License**. 
-Siehe [LICENSE](https://github.com/sinusphi/stickman-fighter/blob/main/LICENSE) für weitere Details.
+Dieses Projekt ist lizensiert unter der **MIT License**.
+Copyright (c) 2026 Youssef Serestou.
+Siehe [LICENSE](LICENSE) für weitere Details.
 
 
 ## Contributions

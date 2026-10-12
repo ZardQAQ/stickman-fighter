@@ -6,7 +6,7 @@ try {
  const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');
- await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
+ await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
  await page.locator('#states').click();
  await page.locator('#reset').click();await page.keyboard.down('d');
  await page.locator('#step').evaluate(b=>{for(let i=0;i<110;i++)b.click();});await page.keyboard.up('d');

@@ -1,16 +1,25 @@
 /* Single palette source for both DOM and Canvas. */
 :root {
   color-scheme: light;
-  --page:#f6f4ee; --arena:#efeee5; --text:#252824; --muted:#626759;
-  --line:#70776b; --subtle-line:#d6d6ca; --track:#d8d9cc;
+  --page:#f6f6f4; --arena:#efefec; --text:#18181b; --muted:#52525b;
+  --line:#64748b; --subtle-line:#e4e4e0; --track:#dcdcd7;
   --p1:#134fbe; --p2:#bc1720; --revenge:#7836a5; --special:#14868b;
-  --hover:#e3e3d7; --inverse:#f6f4ee; --primary:#252824;
-  --key:#faf9f4; --disabled-text:#727769; --disabled-bg:#e9e8df;
-  --focus:#23695e; --ground:#70776b;
-  --hurt:#226b37; --push:#2556b4; --hit:#b32d2d;
+  --hover:#ecece8; --inverse:#ffffff; --primary:#18181b;
+  --key:#ffffff; --disabled-text:#71717a; --disabled-bg:#ecece8;
+  --focus:#a16207; --ground:#64748b;
+  --hurt:#166534; --push:#1d4ed8; --hit:#b91c1c;
   --rigLight:#ffffff;
-  --rigOutline:#39433e; --eye:#f4ffff; --eyeGlow:#8cefff;
+  --rigOutline:#334155; --eye:#f0fdf4; --eyeGlow:#38bdf8;
   --box-alpha:0.09;
+  --surface:#ffffff; --surface-2:#fafaf8; --border:#e4e4e0; --border-strong:#d4d4cf;
+  --faint:#71717a;
+  --brand:#ffcf1a; --brand-strong:#f5b800; --brand-ink:#1c1600; --brand-text:#8a5d00; --brand-soft:#fff6d1;
+  --ok:#15803d; --ok-soft:#e8f6ec; --warn:#c2410c; --warn-soft:#fdeee5; --bad:#b91c1c; --bad-soft:#fdeaea;
+  --p1-soft:#e7eefb; --p2-soft:#fae8e9;
+  --scrim:rgba(246,246,244,0.72);
+  --shadow-sm:0 1px 2px rgba(24,24,27,0.06);
+  --shadow-md:0 1px 2px rgba(24,24,27,0.05),0 6px 16px -6px rgba(24,24,27,0.12);
+  --shadow-lg:0 2px 4px rgba(24,24,27,0.04),0 24px 48px -16px rgba(24,24,27,0.22);
   /* Arena stages (Canvas only). Colours behind fighters keep 3:1 against P1/P2. */
   --stageShadow:#5d584c; --stageLight:#fffdf6;
   --dojoCeiling:#e8e2d4; --dojoPaper:#f4f0e4; --dojoWood:#d3bd98; --dojoTrim:#c8b08a;
@@ -22,16 +31,25 @@
 }
 [data-theme="dark"] {
   color-scheme: dark;
-  --page:#171c1b; --arena:#202724; --text:#f1f2e8; --muted:#b9c1b3;
-  --line:#849184; --subtle-line:#47534b; --track:#353d39;
+  --page:#0f0f11; --arena:#1b1b1e; --text:#f4f4f5; --muted:#a1a1aa;
+  --line:#85858e; --subtle-line:#2a2a2f; --track:#2f2f34;
   --p1:#0085ff; --p2:#ff3040; --revenge:#c996ff; --special:#85eee5;
-  --hover:#354139; --inverse:#171c1b; --primary:#f1f2e8;
-  --key:#2b352f; --disabled-text:#a9b2a3; --disabled-bg:#2a332e;
-  --focus:#70d5b9; --ground:#849184;
+  --hover:#26262b; --inverse:#0f0f11; --primary:#f4f4f5;
+  --key:#222226; --disabled-text:#8b8b93; --disabled-bg:#232327;
+  --focus:#ffd23f; --ground:#85858e;
   --hurt:#83e69a; --push:#9ebfff; --hit:#ff9790;
   --rigLight:#ffffff;
   --rigOutline:#718378; --eye:#f4ffff; --eyeGlow:#8cefff;
   --box-alpha:0.09;
+  --surface:#161618; --surface-2:#131315; --border:#2a2a2f; --border-strong:#3a3a41;
+  --faint:#8b8b93;
+  --brand:#ffd23f; --brand-strong:#ffdd66; --brand-ink:#1c1600; --brand-text:#ffd23f; --brand-soft:#2b2410;
+  --ok:#4ade80; --ok-soft:#12261a; --warn:#fb923c; --warn-soft:#2c1a10; --bad:#f87171; --bad-soft:#2c1414;
+  --p1-soft:#0f2036; --p2-soft:#33141a;
+  --scrim:rgba(15,15,17,0.72);
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:0 1px 2px rgba(0,0,0,0.4),0 8px 20px -8px rgba(0,0,0,0.6);
+  --shadow-lg:0 2px 4px rgba(0,0,0,0.4),0 28px 56px -16px rgba(0,0,0,0.75);
   --stageShadow:#000000; --stageLight:#4c4840;
   --dojoCeiling:#1c1a16; --dojoPaper:#36312a; --dojoWood:#2b2219; --dojoTrim:#1f1914;
   --dojoFloor:#302820; --dojoFloorAlt:#2b241c; --dojoAccent:#171310; --dojoLamp:#f2c47a; --dojoHaze:#24221d;

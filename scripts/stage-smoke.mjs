@@ -6,16 +6,16 @@ const name=engine===firefox?'firefox':'chrome';
 const browser=await engine.launch(engine===chromium?{executablePath:process.env.CHROME_PATH||(existsSync('/usr/bin/google-chrome-stable')?'/usr/bin/google-chrome-stable':undefined),headless:true,args:['--no-sandbox']}:{headless:true});
 const url=process.env.TEST_URL||'http://127.0.0.1:5180';
 const output=`test-results/stages/${name}`;await mkdir(output,{recursive:true});
-const stages=['dojo','rooftop','shrine'],captions={dojo:'THE DOJO',rooftop:'THE ROOFTOP',shrine:'THE SHRINE'};
+const stages=['dojo','rooftop','shrine'],captions={dojo:'道场',rooftop:'屋顶',shrine:'神社'};
 const report={};
 try {
   const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(url); // fresh browser context: no stored theme or stage
-  await page.locator('canvas[data-ready="true"]').waitFor();
+  await page.locator('#enter-local').click();await page.locator('canvas[data-ready="true"]').waitFor();
   // Default stage, caption and switch state.
   await expect(page.locator('[data-stage="dojo"]')).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('#arena-mode')).toHaveText('THE DOJO / LOCAL 1V1');
+  await expect(page.locator('#arena-mode')).toHaveText('道场 / 本地对战');
   await page.locator('#pause').click();
   const frame=await page.locator('#game').getAttribute('data-frame');
   for(const theme of ['light','dark']) {
@@ -24,7 +24,7 @@ try {
     for(const stage of stages) {
       await page.locator(`[data-stage="${stage}"]`).click();
       for(const other of stages)await expect(page.locator(`[data-stage="${other}"]`)).toHaveAttribute('aria-pressed',String(other===stage));
-      await expect(page.locator('#arena-mode')).toHaveText(`${captions[stage]} / LOCAL 1V1`);
+      await expect(page.locator('#arena-mode')).toHaveText(`${captions[stage]} / 本地对战`);
       // Pixel audit of the stage alone (no fighters) in the production renderer.
       const audit=await page.evaluate(async stage=>{
         const {drawStage,STAGE_BANDS,stagePan}=await import('/src/render/stages.ts');
@@ -72,9 +72,9 @@ try {
   // Stage choice is presentation only: no simulation frame advanced while paused.
   expect(await page.locator('#game').getAttribute('data-frame')).toBe(frame);
   // Persistence across reloads, including the caption in CPU mode.
-  await page.locator('[data-stage="rooftop"]').click();await page.reload();await page.locator('canvas[data-ready="true"]').waitFor();
+  await page.locator('[data-stage="rooftop"]').click();await page.reload();await page.locator('#enter-local').click();await page.locator('canvas[data-ready="true"]').waitFor();
   await expect(page.locator('[data-stage="rooftop"]')).toHaveAttribute('aria-pressed','true');
-  await page.keyboard.press('F8');await expect(page.locator('#arena-mode')).toContainText('THE ROOFTOP / VS CPU');
+  await page.keyboard.press('F8');await expect(page.locator('#arena-mode')).toContainText('屋顶 / 对战电脑');
   await page.keyboard.press('F8');
   // Parallax: the vanishing point follows the fighters' midpoint.
   const shift=await page.evaluate(async()=>{

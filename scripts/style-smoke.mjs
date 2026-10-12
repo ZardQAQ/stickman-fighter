@@ -9,7 +9,7 @@ try {
   const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');
-  await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
+  await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
   for(const theme of ['light','dark']) {
     if(theme==='light')await page.locator('#theme').click();
     await expect(page.locator('html')).toHaveAttribute('data-theme',theme);
@@ -234,7 +234,7 @@ try {
     expect(fixture.phase).toBe(match?'matchOver':'roundOver');
     expect(fixture.koFrame).toBe(count===55?36:11);
     await page.locator('#replay-file').setInputFiles({name:'ko.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(fixture.replay))});
-    await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('Replay ended');
+    await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('回放结束');
     await expect.poll(()=>page.locator('#game').evaluate(c=>c.toDataURL())).toBe(fixture.image);
     await page.locator('#game').screenshot({path:`${output}/${name}-ko-${match?'match':'round'}-${count}.png`});
     await page.locator('#play').click();

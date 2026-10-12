@@ -5,7 +5,7 @@ const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome-stab
 try {
  const page=await browser.newPage({viewport:{width:1440,height:1000},...(process.env.FOOTWORK_VIDEO==='1'?{recordVideo:{dir:output,size:{width:1440,height:1000}}}:{})});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
+ await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();await page.locator('#pause').click();
  await page.evaluate(async()=>{
   const {samplePose,animations}=await import('/src/render/skeleton.ts');const {sampleDepths}=await import('/src/render/depth.ts');
   const {drawFigure}=await import('/src/render/figure.ts');const {readPalette}=await import('/src/platform/theme.ts');

@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
+    "dev": "node server/start.mjs",
+    "start": "node server/start.mjs",
+    "dev:client": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
@@ -34,6 +36,9 @@
     "generate:contacts": "node scripts/generate-contact-geometry.mjs",
     "smoke:contacts": "node scripts/contact-timing-smoke.mjs",
     "smoke:knee": "node scripts/knee-strike-smoke.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

@@ -12,6 +12,7 @@ import type { HitLevel } from '../data/schema';
 import type { Palette } from '../platform/theme';
 import { RELAX_FRAMES } from './feedback';
 import { DEFAULT_STAGE, STAGE_VIEW, drawContactShadow, drawStage, stagePan, type StageId } from './stages';
+import { t, type TranslationKey } from '../platform/i18n';
 export { samplePose } from './skeleton';
 
 const ground = STAGE_VIEW.ground;
@@ -94,13 +95,13 @@ export function render(canvas: HTMLCanvasElement, game: GameState, previous: Gam
       ctx.strokeRect(b.x/rules.unit, ground+b.y/rules.unit, b.width/rules.unit,b.height/rules.unit);
       ctx.strokeStyle=color;ctx.lineWidth=1;
       ctx.strokeRect(b.x/rules.unit, ground+b.y/rules.unit, b.width/rules.unit,b.height/rules.unit);
-      ctx.font='8px monospace';ctx.fillStyle=palette.arena;
+      ctx.font='10px "Microsoft YaHei","PingFang SC",sans-serif';ctx.fillStyle=palette.arena;
       ctx.fillRect(b.x/rules.unit-1,ground+b.y/rules.unit-10,ctx.measureText(label).width+2,9);
       ctx.fillStyle=color;ctx.fillText(label,b.x/rules.unit,ground+b.y/rules.unit-2);
     };
-    body.hurtboxes.forEach(b => paint(b,palette.hurt,'HURT'));
-    paint(body.pushbox,palette.push,'PUSH');
-    body.hitboxes.forEach(b => paint(b,palette.hit,'HIT'));
+    body.hurtboxes.forEach(b => paint(b,palette.hurt,t('debug.hurt')));
+    paint(body.pushbox,palette.push,t('debug.push'));
+    body.hitboxes.forEach(b => paint(b,palette.hit,t('debug.hit')));
   }
   // Overlay text keeps an arena-coloured halo so it stays readable on every stage.
   const banner=(text: string,y: number,font: string,halo: number)=>{
@@ -108,10 +109,12 @@ export function render(canvas: HTMLCanvasElement, game: GameState, previous: Gam
     ctx.fillStyle=palette.text;ctx.fillText(text,480,y);
   };
   ctx.textAlign = 'center';
-  if (paused) banner('PAUSE',155,'bold 34px Arial',7);
+  const bannerFont = '"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif';
+  const reasonKey = (reason: string): TranslationKey => reason === 'TIME OVER' ? 'banner.timeOver' : reason === 'DOUBLE KO' ? 'banner.doubleKo' : reason === 'DRAW' ? 'banner.draw' : 'banner.ko';
+  if (paused) banner(t('banner.pause'),155,`bold 34px ${bannerFont}`,7);
   else if (game.round.phase !== 'fighting') {
-    banner(game.round.phase === 'matchOver' ? `PLAYER ${game.round.winner!+1} WINS` : game.round.reason === 'KO' ? 'K.O.' : game.round.reason!,155,'bold 34px Arial',7);
-    banner(game.round.phase === 'matchOver' ? (demo ? 'NÄCHSTES SPIEL STARTET …' : 'BACKSPACE / NEUSTART') : game.round.winner === null ? 'UNENTSCHIEDEN · RUNDE WIRD WIEDERHOLT' : `RUNDE AN PLAYER ${game.round.winner+1}`,181,'11px monospace',4);
+    banner(game.round.phase === 'matchOver' ? t('banner.playerWins',{player:game.round.winner!+1}) : t(reasonKey(game.round.reason ?? 'KO')),155,`bold 34px ${bannerFont}`,7);
+    banner(game.round.phase === 'matchOver' ? (demo ? t('banner.nextMatch') : t('banner.restart')) : game.round.winner === null ? t('banner.roundRepeat') : t('banner.roundTo',{player:game.round.winner+1}),181,`11px ${bannerFont}`,4);
   }
   ctx.textAlign = 'left';ctx.lineJoin='miter';
 }

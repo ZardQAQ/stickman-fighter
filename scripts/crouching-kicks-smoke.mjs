@@ -5,7 +5,7 @@ const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome-stab
 try {
  const page=await browser.newPage({viewport:{width:1600,height:1100}}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#game[data-ready="true"]').waitFor();
+ await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
  if(await page.locator('#step').isDisabled())await page.locator('#pause').click();
  await page.locator('#states').click();
  const names=['lk','lmk','hk','rlk','mk','rhk'];

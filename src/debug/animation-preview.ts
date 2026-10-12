@@ -18,16 +18,16 @@ const previewKeys: Record<string, Parameters<typeof t>[0]> = {
   HitMiddlePunch:'preview.hitPunch', HitLOW:'preview.hitLow', HitMID:'preview.hitMid',
   HitHIGH:'preview.hitHigh', Landing:'preview.landing', KO:'preview.ko',
 };
-const specialLabels: Record<string, string> = {
-  spin_mk:'Spin Middle Kick · 4+MK', spin_hk:'Spin High Kick · 6+HK',
-  jumping_uppercut:'Jumping Uppercut · 6+HP', tornado_mk:'Tornado · 6+MK',
-  forward_spin_hk:'Spin · 4+HK', tornado_spin_combo:'Tornado → Spin · 6+MK+HK',
+const specialKeys: Record<string, Parameters<typeof t>[0]> = {
+  spin_mk:'preview.spinMk', spin_hk:'preview.spinHk',
+  jumping_uppercut:'preview.uppercut', tornado_mk:'preview.tornado',
+  forward_spin_hk:'preview.forwardSpin', tornado_spin_combo:'preview.tornadoCombo',
 };
 function animationLabel(id: string): string {
   if(previewKeys[id])return t(previewKeys[id]);
-  if(specialLabels[id]) {
+  if(specialKeys[id]) {
     const side=id==='forward_spin_hk'?'left':['jumping_uppercut','tornado_mk'].includes(id)?'right':null;
-    return specialLabels[id]+(side?` (${t(`preview.${side}`)})`:'');
+    return t(specialKeys[id])+(side?` (${t(`preview.${side}`)})`:'');
   }
   const match=/^(standing|crouching|airborne)_(lp|mp|hp|lk|lmk|hk|rlk|mk|rhk)$/.exec(id);
   if(match) {
@@ -99,7 +99,7 @@ export function setupAnimationPreview(pauseGame: ()=>void): (time: number, palet
     lastTime=now;sync();
     const id=select.value,pose=samplePose(id,time),angle=(sampleAngles(id,time).rotations?.[0]?.angle??0)*facing;
     const direction=t(angle===0?'preview.startPose':angle>0?'preview.clockwise':'preview.counterclockwise');
-    status.textContent=`Frame ${time.toFixed(2)} / ${range.max}${id.startsWith('Demo')?` · ${angle.toFixed(1)}° · ${direction}`:''}`;
+    status.textContent=`${t('preview.frame',{time:time.toFixed(2),max:range.max})}${id.startsWith('Demo')?` · ${angle.toFixed(1)}° · ${direction}`:''}`;
     canvas.dataset.frame=time.toFixed(2);canvas.dataset.animation=id;
     const ctx=canvas.getContext('2d')!;
     ctx.clearRect(0,0,960,360);ctx.fillStyle=palette.arena;ctx.fillRect(0,0,960,360);

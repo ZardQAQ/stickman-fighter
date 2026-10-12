@@ -1,5 +1,7 @@
 # Stickman Fighter
 
+**Original author / 原作者：** [Youssef Serestou](https://github.com/sinusphi) — [sinusphi/stickman-fighter](https://github.com/sinusphi/stickman-fighter). This repository is a modified copy of that project. Copyright remains with the original author; see [LICENSE](LICENSE).
+
 ![Gameplay-Demo](https://github.com/sinusphi/stickman-fighter/blob/main/pics/demo.gif)
 
 [![Version](https://img.shields.io/badge/version-1.4.0-2563eb)](package.json)
@@ -80,8 +82,9 @@ Use **Backspace** to restart a match. Controls can be reassigned in the game.
 
 ## License
 
-This project is licensed under the **MIT License**. 
-See [LICENSE](https://github.com/sinusphi/stickman-fighter/blob/main/LICENSE) for details.
+This project is licensed under the **MIT License**.
+Copyright (c) 2026 Youssef Serestou.
+See [LICENSE](LICENSE) for details.
 
 
 ## Contributions

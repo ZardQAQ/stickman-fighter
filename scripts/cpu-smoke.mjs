@@ -9,12 +9,12 @@ try {
   const page=await browser.newPage({viewport:{width:1440,height:1100},acceptDownloads:true}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   page.on('console',msg=>{if(msg.type()==='error'&&!msg.location().url.endsWith('/favicon.ico'))errors.push(msg.text());});
-  await page.goto(process.env.TEST_URL||'http://127.0.0.1:5181');await page.locator('#game[data-ready="true"]').waitFor();
+  await page.goto(process.env.TEST_URL||'http://127.0.0.1:5181');await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
   await page.keyboard.press('p');await page.keyboard.press('F3');await page.keyboard.press('F8');
   await expect(page.locator('#cpu')).toHaveAttribute('aria-pressed','true');
   await page.locator('#cpu-level').selectOption('hard');await page.locator('#cpu-level').blur();
-  await expect(page.locator('#arena-mode')).toHaveText('THE DOJO / VS CPU · HARD');
-  await expect(page.locator('#p2-label')).toHaveText('CPU');
+  await expect(page.locator('#arena-mode')).toHaveText('道场 / 对战电脑 · 困难');
+  await expect(page.locator('#p2-label')).toHaveText('电脑');
   const initialFrame=await page.locator('#game').getAttribute('data-frame');await page.waitForTimeout(100);
   await expect(page.locator('#game')).toHaveAttribute('data-frame',initialFrame);
   // Physical P2 is held during recorded single steps; CPU is still observing and emits neutral.
@@ -27,7 +27,7 @@ try {
   expect(replay.frames.every(f=>!f.inputs[1].buttons&&!f.inputs[1].left&&!f.inputs[1].right)).toBe(true);
   // Training and playback suppress the controller, including direct F8 hotkeys.
   await page.keyboard.press('F4');await expect(page.locator('#cpu')).toBeDisabled();
-  await page.keyboard.press('F8');await expect(page.locator('#arena-mode')).toContainText('TRAINING');
+  await page.keyboard.press('F8');await expect(page.locator('#arena-mode')).toContainText('训练');
   await page.keyboard.press('F4');await page.keyboard.press('Backspace');
   await page.keyboard.press('F6');await page.keyboard.press('p');
   const samples=[];
@@ -46,7 +46,7 @@ try {
   await page.keyboard.press('F7');await expect(page.locator('#cpu')).toBeDisabled();
   await page.keyboard.press('p');
   await page.locator('#step').evaluate((b,n)=>{for(let i=0;i<n;i++)b.click();},replay.frames.length);
-  await expect(page.locator('#notice')).toContainText('Replay ended');
+  await expect(page.locator('#notice')).toContainText('回放结束');
   expect(await Promise.all([0,1].map(i=>page.locator(`#hp-${i}`).textContent()))).toEqual(hp);
   const headless=await page.evaluate(async replay=>{
     const {playReplay}=await import('/src/debug/replay.ts');return playReplay(replay).fighters.map(f=>`${f.hp} / 1000`);
@@ -54,14 +54,14 @@ try {
   expect(headless).toEqual(hp);
   await page.keyboard.press('F7');
   await page.screenshot({path:`${output}/ui.png`,fullPage:true});
-  await page.reload();await page.locator('#game[data-ready="true"]').waitFor();
+  await page.reload();await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
   await expect(page.locator('#cpu')).toHaveAttribute('aria-pressed','true');await expect(page.locator('#cpu-level')).toHaveValue('hard');
   await page.locator('#cpu-level-0').selectOption('easy');await page.locator('#cpu-level-0').blur();
   await page.keyboard.press('F9');
   await expect(page.locator('#cpu')).toHaveAttribute('aria-pressed','false');
   await expect(page.locator('#demo')).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('#arena-mode')).toHaveText('THE DOJO / CPU-DEMO · EASY VS HARD');
-  await expect(page.locator('#p1-label')).toHaveText('CPU 01');await expect(page.locator('#p2-label')).toHaveText('CPU 02');
+  await expect(page.locator('#arena-mode')).toHaveText('道场 / 电脑演示 · 简单 VS 困难');
+  await expect(page.locator('#p1-label')).toHaveText('电脑 01');await expect(page.locator('#p2-label')).toHaveText('电脑 02');
   await page.keyboard.press('p');await page.keyboard.press('F6');
   await page.locator('#step').evaluate(b=>{for(let i=0;i<300;i++)b.click();});
   await page.keyboard.press('F6');
@@ -69,11 +69,11 @@ try {
   const demoReplay=JSON.parse(await readFile(await download.path(),'utf8'));
   expect(demoReplay.frames.some(f=>f.inputs[0].buttons||f.inputs[0].left||f.inputs[0].right)).toBe(true);
   expect(demoReplay.frames.some(f=>f.inputs[1].buttons||f.inputs[1].left||f.inputs[1].right)).toBe(true);
-  await page.reload();await page.locator('#game[data-ready="true"]').waitFor();
+  await page.reload();await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
   await expect(page.locator('#demo')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#cpu-level-0')).toHaveValue('easy');await expect(page.locator('#cpu-level')).toHaveValue('hard');
   await page.keyboard.press('F9');await expect(page.locator('#demo')).toHaveAttribute('aria-pressed','false');
-  await expect(page.locator('#p1-label')).toHaveText('PLAYER 01');await expect(page.locator('#p2-label')).toHaveText('PLAYER 02');
+  await expect(page.locator('#p1-label')).toHaveText('玩家 01');await expect(page.locator('#p2-label')).toHaveText('玩家 02');
   expect(errors).toEqual([]);
   await writeFile(`${output}/result.json`,JSON.stringify({browser:name,frames:replay.frames.length,hp,samples,errors},null,2)+'\n');
   console.log(`${name}: VS CPU and two-CPU demo hotkeys, separate levels, persistence, physical-input suppression, training, pause/step, live fight and replay passed.`,hp);

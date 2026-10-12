@@ -6,7 +6,7 @@ const browser=await engine.launch(engine===chromium?{executablePath:process.env.
 const output='test-results/update-03';await mkdir(output,{recursive:true});
 try {
  const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto(process.env.TEST_URL||'http://127.0.0.1:5181');await page.locator('#game[data-ready="true"]').waitFor();
+ await page.goto(process.env.TEST_URL||'http://127.0.0.1:5181');await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
  await page.locator('#pause').click();await page.locator('#states').click();
  for(const [key,id,damage,player] of [['b','spin_mk',80,0],['h','spin_hk',110,0],['Numpad2','spin_mk',80,1],['Numpad6','spin_hk',110,1]]) {
    const forward=player===0?'d':'ArrowLeft',back=player===0?'a':'ArrowRight',direction=id==='spin_hk'?forward:back;
@@ -20,7 +20,7 @@ try {
    await page.locator('#step').evaluate((b,n)=>{for(let i=0;i<n;i++)b.click();},start);
    await expect(page.locator(`#hp-${1-player}`)).toHaveText(`${1000-damage} / 1000`);
    await page.locator('#boxes').click();await page.locator('#game').screenshot({path:`${output}/${name}-p${player+1}-${id}-contact.png`});await page.locator('#boxes').click();
-   await page.locator('#record').click();await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('Replay ended');
+   await page.locator('#record').click();await page.locator('#play').click();await expect(page.locator('#notice')).toContainText('回放结束');
    await expect(page.locator(`#hp-${1-player}`)).toHaveText(`${1000-damage} / 1000`);await page.locator('#play').click();
  }
  // Releasing back before the kick has no lingering qualification.

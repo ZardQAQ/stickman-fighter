@@ -9,7 +9,7 @@ try {
  const page=await browser.newPage({viewport:{width:1440,height:1100}}),errors=[];
  page.on('pageerror',error=>errors.push(error.message));
  await page.goto(process.env.TEST_URL||'http://127.0.0.1:5180');
- await page.locator('#game[data-ready="true"]').waitFor();
+ await page.locator('#enter-local').click();await page.locator('#game[data-ready="true"]').waitFor();
  await page.locator('#animation-preview summary').click();
  const select=page.locator('#preview-animation'),canvas=page.locator('#preview-canvas'),range=page.locator('#preview-time');
  const catalog=await page.evaluate(async()=>{
@@ -52,6 +52,7 @@ try {
  await page.waitForTimeout(150);
  expect(await canvas.getAttribute('data-frame')).toBe(stopped);
  expect(await page.evaluate(()=>window.previewOptionMutations)).toBe(0);
+ await page.locator('#language').click();
  await page.locator('#language').click();
  await expect(select).toHaveValue('DemoBodyCCW');
  await expect(select.locator('option[value="standing_lp"]')).toContainText('Punch leicht');

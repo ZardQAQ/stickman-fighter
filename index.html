@@ -1,13 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" />
-    <title>Stickman Fighter — Local Versus</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='28' height='28' rx='8' fill='%23ffcf1a' stroke='%2318181b' stroke-width='2'/%3E%3Cg fill='none' stroke='%2318181b' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='2.6'/%3E%3Cpath d='M12.5 12.5 14 18M13.2 14.6l-4 2.6M13 14l4.6-1.4 2.8-2.6M14 18l-3 5.6M14 18l7.6-2'/%3E%3C/g%3E%3C/svg%3E" />
+    <title>火柴人格斗</title>
+    <style>
+      .boot { min-height: 100vh; display: grid; place-items: center; background: #0f0f11; }
+      .boot i { width: 36px; height: 36px; border-radius: 10px; background: #ffd23f; transform: rotate(-6deg); box-shadow: 2px 2px 0 #f4f4f5; animation: boot 1s ease-in-out infinite alternate; }
+      @keyframes boot { to { transform: rotate(6deg) scale(.92); } }
+      [data-theme="light"] .boot { background: #f6f6f4; }
+      [data-theme="light"] .boot i { background: #ffcf1a; box-shadow: 2px 2px 0 #18181b; }
+      @media (prefers-reduced-motion: reduce) { .boot i { animation: none; } }
+    </style>
+    <script>try { const s = localStorage.getItem('stickman.theme'); document.documentElement.dataset.theme = s === 'dark' || (s !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; } catch {}</script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app"><div class="boot" role="progressbar" aria-label="Loading"><i></i></div></div>
     <script type="module" src="/src/bootstrap.ts"></script>
   </body>
 </html>
