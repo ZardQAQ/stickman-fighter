@@ -1,6 +1,6 @@
-# Stickman Fighter
+# 火柴人格斗
 
-**Original author / 原作者：** [Youssef Serestou](https://github.com/sinusphi) — [sinusphi/stickman-fighter](https://github.com/sinusphi/stickman-fighter). This repository is a modified copy of that project. Copyright remains with the original author; see [LICENSE](LICENSE).
+**原作者：** [Youssef Serestou](https://github.com/sinusphi) — [sinusphi/stickman-fighter](https://github.com/sinusphi/stickman-fighter)。本仓库是该项目的修改副本。著作权仍归原作者所有，详见 [LICENSE](LICENSE)。
 
 ![Gameplay-Demo](https://github.com/sinusphi/stickman-fighter/blob/main/pics/demo.gif)
 
@@ -8,91 +8,87 @@
 [![Node.js](https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=nodedotjs&logoColor=white)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)](https://vite.dev/)
-[![Tests](https://img.shields.io/badge/tests-Vitest-6e9f18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://github.com/sinusphi/stickman-fighter/blob/main/LICENSE)
 
-**English** · [Deutsch](README.de.md)
+**中文** · [Deutsch](README.de.md)
 
-[▶ Play now](http://p2pstick.zard.loc.cc/)
+[▶ 立即游玩](http://p2pstick.zard.loc.cc/)
 
-A local two-player stick-figure fighting game built with TypeScript and Canvas 2D. 
-It combines deterministic 60 Hz combat with keyboard and gamepad controls, CPU opponents, training tools, replays, and multiple arenas.
-
-
-## Features
-
-- Local versus, CPU, and CPU-versus-CPU modes
-- 33 standing, crouching, airborne, spin, tornado, and combo attacks
-- Blocking, jumping, best-of-three matches, and combat meters
-- Training mode, hitbox display, frame stepping, and animation preview
-- Deterministic replay recording, import, and export
-- Configurable keyboard and gamepad controls
-- English and German interface, light and dark themes, and three arenas
+这是一款用 TypeScript 和 Canvas 2D 制作的本地双人火柴人格斗游戏。它把 60 Hz 的确定性对战，与键盘和手柄操作、电脑对手、训练工具、录像回放以及多个场地结合在一起。
 
 
-## Requirements
+## 功能
 
-- Node.js 22.12+ (22.x), 24.x, or 26+
+- 本地对战、对战电脑、电脑对电脑
+- 33 种站立、下蹲、空中、旋转、龙卷风和连招攻击
+- 格挡、跳跃、三局两胜，以及战斗计量条
+- 训练模式、判定框显示、逐帧步进和动画预览
+- 确定性录像的录制、导入和导出
+- 可重新设置的键盘和手柄按键
+- 中文、英文和德文界面，浅色和深色主题，以及三个场地
+
+
+## 环境要求
+
+- Node.js 22.12+（22.x）、24.x 或 26+
 - npm
 
 
-## Getting started
+## 开始使用
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the address shown in the terminal, usually <http://127.0.0.1:5173>.
+打开终端里显示的地址，通常是 <http://127.0.0.1:1025>。
 
 
-## Default controls
+## 默认操作
 
-| Action | Player 1 | Player 2 | Gamepad |
+| 操作 | 玩家 1 | 玩家 2 | 手柄 |
 |---|---|---|---|
-| Movement | W / A / S / D | Arrow keys | D-pad / left stick |
-| Light / medium / heavy punch | R / T / Y | Numpad 7 / 8 / 9 | X / Y / RB |
-| Left low / middle / high kick | F / G / H | Numpad 4 / 5 / 6 | A / unassigned / RT |
-| Right low / middle / high kick | V / B / N | Numpad 1 / 2 / 3 | unassigned / B / unassigned |
-| Pause | P | P | — |
+| 移动 | W / A / S / D | 方向键 | 十字键 / 左摇杆 |
+| 轻拳 / 中拳 / 重拳 | R / T / Y | 小键盘 7 / 8 / 9 | X / Y / RB |
+| 左侧低踢 / 中踢 / 高踢 | F / G / H | 小键盘 4 / 5 / 6 | A / 未分配 / RT |
+| 右侧低踢 / 中踢 / 高踢 | V / B / N | 小键盘 1 / 2 / 3 | 未分配 / B / 未分配 |
+| 暂停 | P | P | — |
 
-Directions are relative to the opponent: **6** forward, **4** back, **2** crouch, and **7/8/9** jump. 
-Use **Backspace** to restart a match. Controls can be reassigned in the game.
+方向相对于对手：**6** 向前，**4** 向后，**2** 下蹲，**7/8/9** 跳跃。
+按 **Backspace** 重新开始一局。按键可以在游戏内重新设置。
 
 
-## Scripts
+## 脚本
 
-| Command | Purpose |
+| 命令 | 作用 |
 |---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Type-check and create a production build |
-| `npm run preview` | Preview the production build |
-| `npm test` | Run tests in watch mode |
-| `npm run check` | Run the complete validation suite |
+| `npm run dev` | 启动开发服务器 |
+| `npm run build` | 类型检查并生成生产构建 |
+| `npm run preview` | 预览生产构建 |
+| `npm run check` | 类型检查、校验生成数据并构建 |
 
 
-## Project structure
+## 项目结构
 
-- `src/simulation/` — deterministic combat and match logic
-- `src/render/` — Canvas rendering and animation
-- `src/data/` — moves, poses, rules, and configuration
-- `tests/` — unit and integration tests
-- `scripts/` — data generators and browser smoke tests
+- `src/simulation/` — 确定性的战斗与对局逻辑
+- `src/render/` — Canvas 绘制与动画
+- `src/data/` — 招式、姿势、规则和配置
+- `scripts/` — 数据生成脚本
 
 
-## License
+## 许可证
 
-This project is licensed under the **MIT License**.
+本项目采用 **MIT 许可证**。
 Copyright (c) 2026 Youssef Serestou.
-See [LICENSE](LICENSE) for details.
+详见 [LICENSE](LICENSE)。
 
 
-## Contributions
+## 贡献
 
-Contributions are welcome.
+欢迎贡献。
 
-* [Pull requests](https://github.com/sinusphi/stickman-fighter/pulls)
+* [拉取请求](https://github.com/sinusphi/stickman-fighter/pulls)
 
-* [Bug reports](https://github.com/sinusphi/stickman-fighter/issues)
+* [缺陷报告](https://github.com/sinusphi/stickman-fighter/issues)
 
-* [Feature requests](https://github.com/sinusphi/stickman-fighter/issues)
+* [功能建议](https://github.com/sinusphi/stickman-fighter/issues)

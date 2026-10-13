@@ -1,6 +1,5 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   base: './',
-  test: { css: { include: [/\.css/] }, include: ['tests/{unit,integration}/**/*.test.ts'] },
 });

@@ -8,10 +8,9 @@
 [![Node.js](https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=nodedotjs&logoColor=white)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)](https://vite.dev/)
-[![Tests](https://img.shields.io/badge/tests-Vitest-6e9f18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![License](https://img.shields.io/badge/License-MIT-red.svg)](https://github.com/sinusphi/stickman-fighter/blob/main/LICENSE)
 
-[English](README.md) · **Deutsch**
+[中文](README.md) · **Deutsch**
 
 [▶ Spiel starten](http://p2pstick.zard.loc.cc/)
 
@@ -42,7 +41,7 @@ npm ci
 npm run dev
 ```
 
-Anschließend die im Terminal angezeigte Adresse öffnen, normalerweise <http://127.0.0.1:5173>.
+Anschließend die im Terminal angezeigte Adresse öffnen, normalerweise <http://127.0.0.1:1025>.
 
 
 ## Standardsteuerung
@@ -65,8 +64,7 @@ Richtungen gelten relativ zum Gegner: **6** vorwärts, **4** zurück, **2** hock
 | `npm run dev` | Entwicklungsserver starten |
 | `npm run build` | Typen prüfen und Produktionsbuild erstellen |
 | `npm run preview` | Produktionsbuild lokal anzeigen |
-| `npm test` | Tests im Beobachtungsmodus ausführen |
-| `npm run check` | Vollständige Prüfung ausführen |
+| `npm run check` | Typen prüfen, generierte Daten verifizieren und bauen |
 
 
 ## Projektstruktur
@@ -74,8 +72,7 @@ Richtungen gelten relativ zum Gegner: **6** vorwärts, **4** zurück, **2** hock
 - `src/simulation/` — deterministische Kampf- und Matchlogik
 - `src/render/` — Canvas-Darstellung und Animationen
 - `src/data/` — Moves, Posen, Regeln und Konfiguration
-- `tests/` — Unit- und Integrationstests
-- `scripts/` — Datengeneratoren und Browser-Smoke-Tests
+- `scripts/` — Datengeneratoren
 
 
 ## Lizenz

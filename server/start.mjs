@@ -3,7 +3,7 @@ import os from 'node:os';
 import { createServer as createVite } from 'vite';
 import { WebSocketServer } from 'ws';
 
-const PORT = Number(process.env.PORT || 5173);
+const PORT = Number(process.env.PORT || 1025);
 const httpServer = http.createServer();
 const vite = await createVite({
   server: { middlewareMode: true, allowedHosts: true },

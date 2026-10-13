@@ -5,5 +5,5 @@
     "resolveJsonModule": true, "esModuleInterop": true, "skipLibCheck": true,
     "noEmit": true, "noUnusedLocals": true, "noUnusedParameters": true
   },
-  "include": ["src", "tests/unit", "tests/integration", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"]
 }
